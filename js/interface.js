@@ -579,9 +579,9 @@
 		div.style.backgroundSize = 'contain';
 		
 		var div1 = document.createElement('div');
-		div1.innerHTML = '<center><h2>ZICA ENGINE V0.1.0</h2>'+
+		div1.innerHTML = '<center><h2>QuantumEngine version alpha 0.0.1</h2>'+
 		'<p>Create 2D games & apps without programming.</p>' +
-		'<br><center>Copyright © 2020 Željko Ivanović</center>';
+		'<br><center>Copyright © 2022 Quantumgames Studios inc</center>';
 		
 		
 		code_tab.content.appendChild(div);
