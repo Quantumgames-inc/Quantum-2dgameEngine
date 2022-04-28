@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Literally Canvas</title>
+	<link href="css/style.css" rel="stylesheet">
+    <link href="css/literallycanvas.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+  </head>
+
+  <body>
+    <div class="fs-container">
+      <div id="lc"></div>
+    </div>
+
+    <!-- you really ought to include react-dom, but for react 0.14 you don't strictly have to. -->
+    <script src="js/react-0.14.3.js"></script>
+    <script src="js/literallycanvas.js"></script>
+
+    <script type="text/javascript">
+	var image = top.Editor.selectedImage;
+	
+	//var watermarkImage = new Image();
+    //watermarkImage.src = 'css/lc-images/empty.png';
+	
+      var lc = LC.init(document.getElementById("lc"), {
+        imageURLPrefix: 'css/lc-images',
+        toolbarPosition: 'bottom',
+        defaultStrokeWidth: 2,
+        strokeWidths: [1, 2, 3, 5, 30],
+		//watermarkImage: watermarkImage
+      });
+	  
+	  lc.canvas.style.background = 'url(css/lc-images/empty.png)';
+	  var newImage = new Image();
+	  newImage.src = top.Game.assets[image];
+	
+      lc.saveShape(LC.createShape('Image', {x: 0, y: 0, image: newImage}));
+	
+	
+	function save(){
+	 var data =  lc.getImage().toDataURL();
+	 top.Game.assets[image] = data;
+	 top.Editor.updateAsset();
+	 top.Editor.updateImage(image);
+	}
+	
+    </script>
+  </body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>ZICA ENGINE</title>
+    
+	<link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+	<script type="text/javascript" src="js/lib/datgui/dat.gui.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="js/lib/litegui/litegui.css">
+	<script type="text/javascript" src="js/lib/litegui/jscolor/jscolor.js"></script>
+	<script type="text/javascript" src="js/lib/litegui/litegui.js"></script>
+	
+	 <!-- <script src="asseteTab/js/jquery-1.9.1.min.js" type="text/javascript"></script> -->
+	 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	 
+	<link href="js/lib/console/sandbox.css" rel="stylesheet" />
+    <script src="js/lib/console/libs/jquery.min.js"></script>
+	
+	<link href="js/lib/ruler/ruler.min.css" rel="stylesheet" />
+    <script src="js/lib/ruler/ruler.min.js"></script>
+	
+	<script src="js/lib/build/FileSystem.js"></script>
+	<script src="js/lib/build/jszip.min_old.js"></script>
+	<script src="js/lib/build/jszip-utils.js"></script>
+	
+	<!-- <link rel="stylesheet" href="js/lib/emoji-picker/emojionearea.min.css">
+	<script type="text/javascript" src="js/lib/emoji-picker/emojionearea.min.js"></script> -->
+
+	<script src = "js/ZICA.js"></script>
+	<script src = "js/event.js"></script>
+	<!-- <script src = "js/editor.js"></script> -->
+	
+  </head>
+
+
+
+
+  <body onLoad="App.create();">
+  
+	<div id="loading"></div>
+
+	<!--  <div hidden id = "editorDiv"  style="right:25em;" class="main col"> -->
+      <canvas id="field" tabindex="1" data-bind="boundEvent: { keydown: onCanvasKeyDown, mousedown: onCanvasMouseDown, mouseup: onCanvasMouseUp, mousemove: onCanvasMouseMove }"></canvas>
+	  
+	  <div id = "EventEditor" style = "height:100%;width:100%;">
+		<!-- <h2>Event Editor:</h2> -->
+		
+		<select id = "select-event"></select>
+		
+		<button style = 'margin-left:7px;'  title = 'Undo' onclick = 'Editor.eventViewModel.undo();'><i class="fa fa-undo" aria-hidden="true"></i> </button>
+		<button  title = 'Redo' onclick = 'Editor.eventViewModel.redo();'><i class="fa fa-redo" aria-hidden="true"></i> </button>
+
+		<button  style = 'margin-left:7px;' title = 'Copy' onclick = 'Editor.eventViewModel.copy();'><i class="fa fa-copy" aria-hidden="true"></i> </button>
+		<button  title = 'Cut' onclick = 'Editor.eventViewModel.cut();'><i class="fa fa-cut" aria-hidden="true"></i> </button>
+	    <button  title = 'Paste' onclick = 'Editor.eventViewModel.paste();'><i class="fa fa-paste" aria-hidden="true"></i> </button>
+
+		<button style = 'margin-left:7px;' title = 'Find' onclick = 'Editor.eventViewModel.find();'><i class="fa fa-binoculars" aria-hidden="true"></i> </button>
+	    <button  title = 'Goto' onclick = 'Editor.eventViewModel.goToLine();'><i class="fas fa-running" aria-hidden="true"></i> </button>
+
+		<button hidden onclick = "Editor.eventViewModel.eventApply();" >Apply</button>
+		
+		<div style = "height:100%;width:100%;" id="event-editor">
+		
+        </div>
+		
+	   
+	  </div>
+	
+	  <iframe id = 'filemanager' style = "position:absolute; top:0%;height:100%;width:100%;" src = "js/lib/asseteTab/ImageManager.html"></iframe>
+	  <iframe id = 'prefabsTab' style = "position:absolute; top:0%;height:100%;width:100%;" src = "js/lib/prefabsTab/index.html"></iframe>
+	  <iframe id = 'ZScript' style = "position:absolute; top:0%;height:100%;width:100%;" src = "js/lib/ZScript/index.html"></iframe>
+	  <iframe id = 'animaiton' style = "position:absolute; top:0%;height:100%;width:100%;" src = "js/lib/AnimationManager/index.html"></iframe>	  
+	  <!-- <iframe id = 'timeline' style = "position:absolute; top:0%;height:100%;width:100%;" src = "js/lib/timeline/examples/index.html#" ></iframe> -->
+	 
+	
+	<ul hidden class="thumbnails" id = 'build'>
+	  <li>
+		<p align='center'>Web</p>
+		<img src="img/web.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px' onclick = "Editor.buildWeb(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	  <li>
+	    <p align='center'>Android</p>
+		<img src="img/android.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px' onclick = "Editor.buildAndroid(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	  <li>
+	    <p align='center'>Windows</p>
+		<img src="img/windows.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px'  onclick = "Editor.buildWindows(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	  <li>
+	    <p align='center'>Linux</p>
+		<img src="img/linux.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px'  onclick = "Editor.buildLinux(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	  <li>
+	    <p align='center'>Mac</p>
+		<img src="img/osx.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px'  onclick = "Editor.buildMac(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	  <li>
+	    <p align='center'>Chrome</p>
+		<img src="img/chrome.png" alt="Logo">
+		<button style = 'position:absolute;bottom:0px;right:0px'  onclick = "Editor.buildChrome(this);">
+          <i class="fa fa-download" ></i>
+        </button>
+	  </li>
+	  
+	</ul>
+  
+	<div style="height:25px">
+	
+      <div class="sidebar-controls">
+        <input id="file-dialog" type="file" style="display: none;" onchange="Editor.onFileDialogClose()">
+
+        <button id="file-new-button" title = 'New' onclick ="Editor.newProject()">
+          <i class="fa fa-file-o" aria-hidden="true"></i> New
+        </button>
+
+        <button id="file-open-button" title = 'Open' onclick ="Editor.openProject()">
+          <i class="fa fa-folder-open-o" aria-hidden="true"></i> Open
+        </button>
+
+        <button id="file-save-button" title = 'Save' onclick="Editor.saveProject();">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+        </button>
+		
+		<button  id="file-import-button" title = 'Import' onclick = "Editor.import();">
+          <i class="fas fa-file-import" aria-hidden="true"></i> Import
+        </button>
+		
+        <button id="file-export-button" title = 'Export' onclick="Editor.exportProject()">
+          <i class="fas fa-file-export" aria-hidden="true"></i> Export
+        </button>
+		
+		<button id="file-share-button" title = 'Create Prefab' onclick='Editor.shareToPrefabs();'>
+          <i class="fa fa-share-square-o" aria-hidden="true"></i> Create Prefab
+        </button>
+		
+		<button id="play-pause-button" title = 'Play/Pause' onclick = 'Editor.togglePlayPauseGame()' >
+          <i class="fa fa-play" aria-hidden="true"></i> <span> Play</span>
+        </button>
+
+        <button id="stop-button" hidden title = 'Stop' onclick = 'Editor.stopGame();' >
+          <i class="fa fa-stop" aria-hidden="true"></i> <span> Stop</span>
+        </button>
+		
+		<button id="build-button" title = 'Build' onclick = "openBuildTab();">
+           <i class="fa fa-android" aria-hidden="true"></i> Build
+        </button>
+		
+		<button id="up-button" title = 'Send to Back'>
+           <i class="fa fa-arrow-up" aria-hidden="true"></i> Move Up
+        </button>
+		
+		<button id="down-button" title = 'Bring to Front'>
+           <i class="fa fa-arrow-down"  aria-hidden="true"></i> Move Down
+        </button>
+		
+		<button id="settings" title = 'Settings' onclick = "openSettingTab();">
+          <i class="fa fa-cog" aria-hidden="true"></i> Settings
+        </button>
+		
+		<button id="about-button" title = 'About' onclick = "openAboutTab();">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> About
+        </button>
+		
+		<button id="fullscreen-button" title = 'FullScreen' onclick = "Editor.toggleFullScreen();">
+          <i id = 'fsicon' class="fa fa-expand" aria-hidden="true"></i> FullScreen
+        </button>
+		
+      </div>
+	  
+	  <div id = 'sce_toolbar' class="sidebar-controls">
+		
+		<button id="add-sprite-button" title = 'Add Entity' onclick ="Editor.spawnEntity()">
+           <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Entity
+        </button>
+        
+        <button id="duplicate-sprite-button" title = 'Duplicate Entity' onclick ="Editor.duplicateSelectedEntity()">
+           <i class="fa fa-clone" aria-hidden="true"></i> Clone
+        </button>
+        
+        <button id="remove-sprite-button" title = 'Remove Entity' onclick ="Editor.removeSelectedEntity()">
+          <i class="fa fa-trash" aria-hidden="true"></i> Remove
+        </button>
+		
+		<button id="copy-sprite-button" title = 'Copy' onclick = 'Editor.copyEntity();' style = 'margin-left:2px'>
+          <i class="fa fa-copy" aria-hidden="true"></i> Copy
+        </button>
+		
+		<button id="paste-sprite-button" title = 'Paste' onclick = 'Editor.pasteEntity();'>
+          <i class="fa fa-paste" aria-hidden="true"></i> Paste
+        </button>
+		
+		<button id="cut-sprite-button" title = 'Cut' onclick = 'Editor.cutEntity();' style = 'margin-right:2px'>
+          <i class="fa fa-cut" aria-hidden="true"></i> Cut
+        </button>
+		
+		
+		<button id="undo-button" >
+           <i class="fa fa-undo"  aria-hidden="true"></i> Undo
+        </button>
+		<button id="redo-button" >
+           <i class="fa fa-redo"  aria-hidden="true"></i> Redo
+        </button>
+		
+		<!-- <button id="grid-show-button" >
+           <i class="fa fa-th"  aria-hidden="true"></i> Grid
+        </button>
+		
+		<button id="snap-button" title = 'Snap to Grid' >
+           <i class="fas fa-ruler"  aria-hidden="true"></i> Snap
+        </button>
+		<button id="focus-button" title = 'Focus'>
+           <i class="fa fa-dot-circle-o"  aria-hidden="true"></i> Focus
+        </button> -->
+		
+      </div>
+      
+	   <div id = 'snapbar' title = 'Grid' class="sidebar-controls" >
+	   <button id="grid-show-button" >
+           <i class="fa fa-th"  aria-hidden="true"></i>
+        </button>
+		
+		<button id="snap-button" title = 'Snap to Grid' >
+           <i class="fas fa-ruler"  aria-hidden="true"></i>
+        </button>
+		<button id="focus-button" title = 'Focus'>
+           <i class="fa fa-dot-circle-o"  aria-hidden="true"></i>
+        </button>
+	  </div>
+	  
+	  <div id = 'snap-controls' class="sidebar-controls" hidden>
+		<button id="b-up-r" >
+           <i class="fa fa-arrow-up fa-rotate-r"  aria-hidden="true"></i>
+        </button>
+		<button id="b-up" >
+           <i class="fa fa-arrow-up"  aria-hidden="true"></i>
+        </button>
+		<button id="b-up-l" >
+           <i class="fa fa-arrow-up fa-rotate-l"  aria-hidden="true"></i>
+        </button>
+		<br>
+		<button id="b-left" >
+           <i class="fa fa-arrow-left"  aria-hidden="true"></i>
+        </button>
+		<button id="b-clone" >
+           <i class="fa fa-square-o"  aria-hidden="true"></i>
+        </button>
+		<button id="b-right" >
+           <i class="fa fa-arrow-right"  aria-hidden="true"></i>
+        </button>
+		<br>
+		<button id="b-down-l" >
+           <i class="fa fa-arrow-down fa-rotate-l"  aria-hidden="true"></i>
+        </button>
+		<button id="b-down" >
+           <i class="fa fa-arrow-down"  aria-hidden="true"></i>
+        </button>
+		<button id="b-down-r" >
+           <i class="fa fa-arrow-down fa-rotate-r"  aria-hidden="true"></i>
+        </button>
+		
+	  </div>
+	
+	</div>
+	
+	<!-- The sandbox template -->
+	<script type="text/template" id="tplSandbox">
+		<pre class="output"></pre>
+		<div class="input">
+			<textarea rows="1" placeholder="<%= placeholder %>"></textarea>
+		</div>
+	</script>
+
+	<!-- The command/result template (NB whitespace/line breaks matter inside <pre> tag): -->
+	<script type="text/template" id="tplCommand"><% if (! _hidden) { %><span class="command"><%= command %></span>
+	<span class="prefix"><%= this.resultPrefix %></span><span class="<%= _class %>"><%= result %></span>
+	<% } %></script>
+	
+	
+	<script src="js/lib/console/libs/underscore.min.js"></script>
+	<script src="js/lib/console/libs/backbone.min.js"></script>
+	<script src="js/lib/console/libs/backboneLS.js"></script><!-- opt -->
+	<!-- <script src="js/lib/console/libs/jquery.min.js"></script> -->
+
+	<script src="js/lib/console/sandbox-console.js"></script>
+	
+	<script src = "js/interface.js"></script>
+	<!-- <script src="js/lib/base64.js"></script> -->
+	
+	 <script data-main="js/require-config" src="js/lib/require.js"></script>
+	 
+	<script type="text/javascript" src="js/lib/TransformTool/Utils.js"></script>
+	<script type="text/javascript" src="js/lib/TransformTool/TransformTool.js"></script>
+	<script type="text/javascript" src="js/lib/TransformTool/TransformCanvasPictures.js"></script>
+	
+	
+  </body>
+</html>
